@@ -1,6 +1,6 @@
-
-
 const Hapi = require('hapi');
+const InvalidIdError = require('./src/errors/invalid-id');
+const issueCredential = require('./src/issue-credential');
 
 const server = Hapi.server({
   port: 3000,
@@ -13,9 +13,17 @@ const init = async () => {
 };
 
 server.route({
-  method: 'GET',
-  path: '/',
-  handler: () => 'Hello, world!',
+  method: 'POST',
+  path: '/issue-credential',
+  handler: async (request, h) => {
+    try {
+      await issueCredential(request.payload.dni);
+    } catch (e) {
+      if (e instanceof InvalidIdError) {
+        return h.response({ error: e.message }).code(403);
+      }
+    }
+  },
 });
 
 process.on('unhandledRejection', (err) => {
