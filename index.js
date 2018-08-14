@@ -9,7 +9,6 @@ const server = Hapi.server({
 
 const init = async () => {
   await server.start();
-  console.log(`Server running at: ${server.info.uri}`);
 };
 
 server.route({
@@ -32,11 +31,6 @@ server.route({
 
     return { credential };
   },
-});
-
-process.on('unhandledRejection', (err) => {
-  console.log(err);
-  process.exit(1);
 });
 
 init();
