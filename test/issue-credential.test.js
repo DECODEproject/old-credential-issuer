@@ -13,4 +13,9 @@ describe('issue-credential', () => {
     expect(issueCredential('invalid'))
       .rejects.toThrowError(InvalidIdError);
   });
+
+  it('should throw a generic Error if there\'s an issue creating the credential', () => {
+    expect(issueCredential('500'))
+      .rejects.toThrow();
+  });
 });

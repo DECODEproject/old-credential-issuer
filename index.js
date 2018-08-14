@@ -24,6 +24,10 @@ server.route({
       if (e instanceof InvalidIdError) {
         return h.response({ error: e.message }).code(403);
       }
+
+      return h.response({
+        error: 'There was an error while issuing the credential',
+      }).code(500);
     }
 
     return { credential };
