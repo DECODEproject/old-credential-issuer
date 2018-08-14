@@ -8,7 +8,7 @@
     "start-watch": "nodemon --legacy-watch index.js",
     "lint": "eslint .",
     "test": "jest",
-    "test-watch": "jest --watch"
+    "test-watch": "jest --watchAll"
   },
   "repository": {
     "type": "git",
