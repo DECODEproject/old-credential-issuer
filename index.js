@@ -16,13 +16,17 @@ server.route({
   method: 'POST',
   path: '/issue-credential',
   handler: async (request, h) => {
+    let credential;
+
     try {
-      await issueCredential(request.payload.dni);
+      credential = await issueCredential(request.payload.dni);
     } catch (e) {
       if (e instanceof InvalidIdError) {
         return h.response({ error: e.message }).code(403);
       }
     }
+
+    return { credential };
   },
 });
 
