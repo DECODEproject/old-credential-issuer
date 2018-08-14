@@ -9,13 +9,8 @@ describe('issue-credential', () => {
     expect(credential).toBe(expectedCredential);
   });
 
-  it('should throw an InvalidIdError if given an invalid DNI', async () => {
-    let error;
-    try {
-      await issueCredential('invalid');
-    } catch (e) {
-      error = e;
-    }
-    expect(error).toBeInstanceOf(InvalidIdError);
+  it('should throw an InvalidIdError if given an invalid DNI', () => {
+    expect(issueCredential('invalid'))
+      .rejects.toThrowError(InvalidIdError);
   });
 });
