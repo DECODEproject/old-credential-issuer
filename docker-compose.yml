@@ -4,6 +4,8 @@ services:
     build: .
     ports:
       - 3000:3000
+    environment:
+      - VERIFIER_BASE_URL=http://verifier:8080
     volumes:
       - .:/code
     command: ["npm", "run", "start-watch"]

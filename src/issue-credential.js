@@ -1,8 +1,8 @@
 const axios = require('axios');
 const InvalidIdError = require('./errors/invalid-id');
 
-module.exports = async (dni) => {
-  const { data: verifyResponse } = await axios.post('http://verifier:8080/verify', {
+module.exports = async (verifierUrl, dni) => {
+  const { data: verifyResponse } = await axios.post(verifierUrl, {
     dni,
   });
 
