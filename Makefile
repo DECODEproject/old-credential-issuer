@@ -2,7 +2,7 @@
 .PHONY:
 
 define d-run
-	docker run --rm -ti
+	docker run --rm
 endef
 
 
