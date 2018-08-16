@@ -29,7 +29,12 @@ describe('issue-credential', () => {
   });
 
   it('should throw a generic Error if there\'s an issue creating the credential', async () => {
-    await expect(issueCredential('500'))
+    const requestorDni = '500';
+    axios.post.mockRejectedValue(new Error());
+    await expect(issueCredential(requestorDni))
       .rejects.toThrow();
+    expect(axios.post).toBeCalledWith('http://verifier:8080/verify', {
+      dni: requestorDni,
+    });
   });
 });
