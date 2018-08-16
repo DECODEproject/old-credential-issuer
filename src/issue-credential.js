@@ -1,3 +1,4 @@
+const axios = require('axios');
 const InvalidIdError = require('./errors/invalid-id');
 
 module.exports = async (dni) => {
@@ -8,6 +9,12 @@ module.exports = async (dni) => {
     throw new Error();
   }
 
-  const credential = '123456789';
-  return credential;
+  const { data: verifyResponse } = await axios.post('http://verifier:8080/verify', {
+    dni,
+  });
+
+  if (verifyResponse.ok) {
+    const credential = '123456789';
+    return credential;
+  }
 };

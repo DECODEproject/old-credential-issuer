@@ -1,21 +1,29 @@
+const axios = require('axios');
 const InvalidIdError = require('../src/errors/invalid-id');
 const issueCredential = require('../src/issue-credential');
 
+jest.mock('axios');
+
 describe('issue-credential', () => {
   it('should return a credential if given a valid DNI', async () => {
-    const credential = await issueCredential('12345678A');
+    const requestorDni = '12345678A';
+    axios.post.mockResolvedValue({ ok: true, error: "" });
+    const credential = await issueCredential(requestorDni);
 
     const expectedCredential = '123456789';
     expect(credential).toBe(expectedCredential);
+    expect(axios.post).toBeCalledWith('http://verifier/verify', {
+      dni: requestorDni,
+    });
   });
 
-  it('should throw an InvalidIdError if given an invalid DNI', () => {
-    expect(issueCredential('invalid'))
+  it('should throw an InvalidIdError if given an invalid DNI', async () => {
+    await expect(issueCredential('invalid'))
       .rejects.toThrowError(InvalidIdError);
   });
 
-  it('should throw a generic Error if there\'s an issue creating the credential', () => {
-    expect(issueCredential('500'))
+  it('should throw a generic Error if there\'s an issue creating the credential', async () => {
+    await expect(issueCredential('500'))
       .rejects.toThrow();
   });
 });
