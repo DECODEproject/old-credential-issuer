@@ -7,12 +7,12 @@ jest.mock('axios');
 describe('issue-credential', () => {
   it('should return a credential if given a valid DNI', async () => {
     const requestorDni = '12345678A';
-    axios.post.mockResolvedValue({ ok: true, error: "" });
+    axios.post.mockResolvedValue({ data: { ok: true, error: '' } });
     const credential = await issueCredential(requestorDni);
 
     const expectedCredential = '123456789';
     expect(credential).toBe(expectedCredential);
-    expect(axios.post).toBeCalledWith('http://verifier/verify', {
+    expect(axios.post).toBeCalledWith('http://verifier:8080/verify', {
       dni: requestorDni,
     });
   });

@@ -13,8 +13,9 @@ module.exports = async (dni) => {
     dni,
   });
 
-  if (verifyResponse.ok) {
-    const credential = '123456789';
-    return credential;
+  if (!verifyResponse.ok) {
+    return '';
   }
+  const credential = '123456789';
+  return credential;
 };
