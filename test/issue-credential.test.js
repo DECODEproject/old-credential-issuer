@@ -18,8 +18,14 @@ describe('issue-credential', () => {
   });
 
   it('should throw an InvalidIdError if given an invalid DNI', async () => {
-    await expect(issueCredential('invalid'))
+    const requestorDni = 'invalid';
+    axios.post.mockResolvedValue({ data: { ok: false, error: 'fail' } });
+
+    await expect(issueCredential(requestorDni))
       .rejects.toThrowError(InvalidIdError);
+    expect(axios.post).toBeCalledWith('http://verifier:8080/verify', {
+      dni: requestorDni,
+    });
   });
 
   it('should throw a generic Error if there\'s an issue creating the credential', async () => {
