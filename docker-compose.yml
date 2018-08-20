@@ -8,6 +8,7 @@ services:
       - VERIFIER_BASE_URL=http://verifier:8080
     volumes:
       - .:/code
+      - /code/node_modules
     command: ["npm", "run", "start-watch"]
 
   verifier:
